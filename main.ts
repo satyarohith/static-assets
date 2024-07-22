@@ -1,6 +1,12 @@
 import { serve } from "https://deno.land/std@0.140.0/http/server.ts";
-import { serveFile } from "https://deno.land/std@0.140.0/http/file_server.ts";
+import { serveDir } from "https://deno.land/std@0.140.0/http/file_server.ts";
 
-serve(async (req) => {
-  return await serveFile(req, `${Deno.cwd()}/static/index.html`);
+serve((req) => {
+  const pathname = new URL(req.url).pathname;
+  if (pathname.startsWith("/static")) {
+    return serveDir(req, {
+      fsRoot: `${Deno.cwd()}/static`,
+    });
+  }
+  return new Response("hello world");
 });
