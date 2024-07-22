@@ -5,7 +5,7 @@ serve((req) => {
   const pathname = new URL(req.url).pathname;
   if (pathname.startsWith("/static")) {
     return serveDir(req, {
-      fsRoot: `${Deno.cwd()}/static`,
+      fsRoot: `${Deno.cwd()}`,
     });
   }
   return new Response("hello world");
